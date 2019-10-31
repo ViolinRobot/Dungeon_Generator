@@ -1,4 +1,5 @@
 ﻿using System;
+using Generator;
 
 public class Room
 {
