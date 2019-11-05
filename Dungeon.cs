@@ -1,12 +1,20 @@
 ﻿using System;
 
+// A dungeon is a list of rooms
+
 namespace Generator {
 	public class Generator {
 
-		public void GenerateLayout() {
+		// Given a sink type, generate the layout of the room
+		public void GenerateLayout(string sinkType) {
+
 		}
 
-		public struct Room {
+		void generateRoom(){
+
+		}
+
+		struct Room {
 			bool floor;
 			bool walls;
 			bool ceiling;
@@ -26,8 +34,8 @@ namespace Generator {
 			}			
 		}
 
-		public struct Portal {
-			public Room roomA, roomB;
+		struct Portal {
+			Room roomA, roomB;
 
 			public Portal(Room room1, Room room2) {
 				roomA = room1;
@@ -35,12 +43,12 @@ namespace Generator {
 			}
 		}
 
-		public struct Hall {
-			public string lighting;
-			public Portal portalA, portalB;
-			public Size size;
+		struct Hall {
+			string lighting;
+			Portal portalA, portalB;
+			Size size;
 
-			public Hall(string theLighting="light", Portal portal1, Portal portal2, Size theSize) {
+			public Hall(Portal portal1, Portal portal2, Size theSize, string theLighting="light") {
 				portalA = portal1;
 				portalB = portal2;
 				size = theSize;
@@ -48,8 +56,8 @@ namespace Generator {
 			}
 		}
 
-		public struct Size {
-			public int x, y;
+		struct Size {
+			int x, y;
 
 			public Size(int xIn, int yIn) {
 				x = xIn;
