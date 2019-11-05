@@ -5,13 +5,30 @@
 namespace Generator {
 	public class Generator {
 
-		// Given a sink type, generate the layout of the room
-		public void GenerateLayout(string sinkType) {
+		// int, bool --> Room[]
+		// Given an integer (number of rooms) and a boolean (determines the generation of a boss room), generate a dungeon
+		public Room[] GenerateLayout(int size, bool bossRoom) {
+			Room[] theDungeon = new Room[size];
 
+			// Use recursion
+			return generateDungeon(theDungeon, bossRoom);
 		}
 
-		void generateRoom(){
+		// Room[], bool --> Room[]
+		// Given a list of rooms (the empty dungeon) and a boolean (determines the generation of a boss room), generate a dungeon recursively
+		Room[] generateDungeon(Room[] theDungeon, bool bossRoom) {
+		}
 
+		// Room[], ... --> Room
+		// Return a room
+		Room generateRoom(Room[] theDungeon) {
+			return new Room();
+		}
+
+		// Room[], Bool, ... --> Room
+		// Return a hall-like room
+		Room generateHall(Room[] theDungeon, bool twoExits) {
+			return new Room();
 		}
 
 		struct Room {
@@ -43,19 +60,6 @@ namespace Generator {
 			}
 		}
 
-		struct Hall {
-			string lighting;
-			Portal portalA, portalB;
-			Size size;
-
-			public Hall(Portal portal1, Portal portal2, Size theSize, string theLighting="light") {
-				portalA = portal1;
-				portalB = portal2;
-				size = theSize;
-				lighting = theLighting;
-			}
-		}
-
 		struct Size {
 			int x, y;
 
@@ -63,6 +67,16 @@ namespace Generator {
 				x = xIn;
 				y = yIn;
 			}
+		}
+
+		// Need to test this...
+		bool isFull(object[] theArray) {
+			for (int i = 0; i < theArray.Length(); i++) {
+				if(theArray[i].GetType() != theArray.GetType())
+					return false;
+			}
+
+			return true;
 		}
 	}
 }
