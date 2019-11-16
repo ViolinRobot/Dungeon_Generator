@@ -4,7 +4,7 @@ using System.Collections.Generic;
 // A dungeon is a list of rooms
 
 namespace Generator {
-	public class Generator {
+	public class DungeonGenerator {
 
 		// int, bool --> Room[]
 		// Given an integer (number of rooms) and a boolean (determines the generation of a boss room), generate a dungeon
