@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {
+      "Dungeon_Generator/1.0.0": {
+        "runtime": {
+          "Dungeon_Generator.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Dungeon_Generator/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
