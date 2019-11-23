@@ -1,7 +1,7 @@
 using System;
 namespace nameGen{
   class ranNameGen{
-    Random rand = new Random();
+    private Random rand = new Random();
     private string cons = "qwrtypsdfghjklzxcvbnm";
     private string vows = "aeuio";
 
