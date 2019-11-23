@@ -131,8 +131,15 @@ namespace Dungeon_Generator
             List<List<Coord>> regionsFilled = GetRegions(1);
             List<List<Coord>> regionsSpace = GetRegions(0);
 
+            List<Room> rooms = new List<Room>();
+
             TrimRegions(regionsFilled, sizeThreshold, 0);
-            TrimRegions(regionsSpace, sizeThreshold, 1);
+            TrimRegions(regionsSpace, sizeThreshold, 1, ref rooms, map);
+
+            rooms.Sort();
+            rooms[0].isMainRoom = true;
+
+            map = ConnectClosestRooms(rooms, map);
 
             return map;
         }
@@ -149,6 +156,108 @@ namespace Dungeon_Generator
                     }
                 }
             }
+        }
+
+        void TrimRegions(List<List<Coord>> regions, int sizeThreshold, int antiType, ref List<Room> roomsList, int[,] map)
+        {
+            foreach (List<Coord> region in regions)
+            {
+                if (region.Count < sizeThreshold)
+                {
+                    foreach (Coord position in region)
+                    {
+                        map[position.x, position.y] = antiType;
+                    }
+                } 
+                else
+                {
+                    roomsList.Add(new Room(region, map));
+                }
+            }
+        }
+
+        int[,] ConnectClosestRooms(List<Room> allRooms, int[,] map, bool forceAccessibleFromMainRoom = false)
+        {
+            List<Room> roomListA = new List<Room>();
+            List<Room> roomListB = new List<Room>();
+
+            if (forceAccessibleFromMainRoom)
+            {
+                foreach(Room room in allRooms)
+                {
+                    if (room.isAccessibleFromMainRoom)
+                        roomListB.Add(room);
+                    else
+                        roomListA.Add(room);
+                }
+            } 
+            else
+            {
+                roomListA = allRooms;
+                roomListB = allRooms;
+            }
+
+            int bestDistance = 0;
+            Coord bestSpaceA = new Coord();
+            Coord bestSpaceB = new Coord();
+            Room bestRoomA = new Room();
+            Room bestRoomB = new Room();
+            bool possibleConnectionFound;
+
+            foreach (Room roomA in roomListA)
+            {
+                possibleConnectionFound = false;
+
+                foreach (Room roomB in roomListB)
+                {
+                    if (roomA == roomB)
+                        continue;
+                    if (roomA.IsConnected(roomB))
+                    {
+                        possibleConnectionFound = false;
+                        break;
+                    }
+
+                    for (int spaceIndexA = 0; spaceIndexA < roomA.edgeSpaces.Count; spaceIndexA++)
+                    {
+                        for (int spaceIndexB = 0; spaceIndexB < roomB.edgeSpaces.Count; spaceIndexB++)
+                        {
+                            Coord spaceA = roomA.edgeSpaces[spaceIndexA];
+                            Coord spaceB = roomB.edgeSpaces[spaceIndexB];
+                            int distance = (int)MathF.Sqrt(MathF.Pow(spaceA.x - spaceB.x, 2) + MathF.Pow(spaceA.y - spaceB.y, 2));
+
+                            if (distance < bestDistance || !possibleConnectionFound)
+                            {
+                                bestDistance = distance;
+                                possibleConnectionFound = true;
+                                bestSpaceA = spaceA;
+                                bestSpaceB = spaceB;
+                                bestRoomA = roomA;
+                                bestRoomB = roomB;
+                            }
+                        }
+                    }
+
+                    if (possibleConnectionFound)
+                    {
+                        map = CreatePassage(bestRoomA, bestRoomB, bestSpaceA, bestSpaceB, map);
+                    }
+                }
+
+                if (!forceAccessibleFromMainRoom)
+                {
+                    ConnectClosestRooms(allRooms, map, true);
+                }
+            }
+
+            return map;
+        }
+
+        int[,] CreatePassage(Room roomA, Room roomB, Coord spaceA, Coord spaceB, int[,] map)
+        {
+            Room.ConnectRooms(roomA, roomB);
+
+            return map;
         }
 
         bool WithinBounds(int x, int y)
@@ -168,6 +277,77 @@ namespace Dungeon_Generator
                 }
 
                 Console.WriteLine(row);
+            }
+        }
+
+        class Room : IComparable<Room> 
+        {
+            public List<Coord> spaces;
+            public List<Coord> edgeSpaces;
+            public List<Room> connectedRooms;
+            public int roomSize;
+            public bool isAccessibleFromMainRoom;
+            public bool isMainRoom;
+
+            public Room() {}
+
+            public Room(List<Coord> roomSpaces, int[,] map)
+            {
+                spaces = roomSpaces;
+                roomSize = spaces.Count;
+                connectedRooms = new List<Room>();
+
+                edgeSpaces = new List<Coord>();
+                foreach (Coord space in spaces)
+                {
+                    for (int x = space.x-1; x <= space.x+1; x++)
+                    {
+                        for (int y = space.y-1; y <= space.y+1; y++)
+                        {
+                            if (x == space.x || y == space.y)
+                            {
+                                if (map[x, y] == 0)
+                                    edgeSpaces.Add(space);
+                            }
+                        }
+                    }
+                }
+            }
+
+            public void SetAccessibleFromMainRoom()
+            {
+                if (!isAccessibleFromMainRoom)
+                {
+                    isAccessibleFromMainRoom = true;
+                    foreach (Room connectedRoom in connectedRooms)
+                    {
+                        connectedRoom.SetAccessibleFromMainRoom();
+                    }
+                }
+            }
+
+            public static void ConnectRooms(Room roomA, Room roomB)
+            {
+                if (roomA.isAccessibleFromMainRoom)
+                {
+                    roomB.SetAccessibleFromMainRoom();
+                }
+                else if (roomB.isAccessibleFromMainRoom)
+                {
+                    roomA.SetAccessibleFromMainRoom();
+                }
+                roomA.connectedRooms.Add(roomB);
+                roomB.connectedRooms.Add(roomA);
+            }
+
+            public bool IsConnected(Room otherRoom)
+            {
+                return connectedRooms.Contains(otherRoom);
+            }
+
+            public int CompareTo(Room otherRoom)
+            {
+                return otherRoom.roomSize.CompareTo(roomSize);
             }
         }
 
