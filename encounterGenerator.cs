@@ -225,7 +225,7 @@ namespace Dungeon_Generator
             int spot = rand.Next(0, cnt);
 
             //loop because given JSON pages with up to 50 monsters at a time, and can grab from any random page
-            while (spot / (50 * str) >= 1)
+            while (spot / (50 * str) >= 1 && !string.IsNullOrEmpty(nPage))
             {
                 //grabbing the link to the next page if the monster is not on the current one
                 nPage = jPerson.next;
@@ -256,10 +256,10 @@ namespace Dungeon_Generator
             //setting up to randomly grab a monster based off of the CR
             int cnt = jPerson.count;
             int str = 1;
-            int spot = rand.Next(0, cnt + 1);
+            int spot = rand.Next(0, cnt);
 
             //loop because given JSON pages with up to 50 monsters at a time, and can grab from any random page
-            while (spot / (50 * str) >= 1)
+            while (spot / (50 * str) >= 1 && !string.IsNullOrEmpty(nPage))
             {
                 //grabbing the link to the next page if the monster is not on the current one
                 nPage = jPerson.next;
@@ -271,7 +271,88 @@ namespace Dungeon_Generator
                 str++;
             }
 
+            return jPerson.results[spot % 50-1];
+        }
+
+        public dynamic FindLoot()
+        {
+            //setting up the connection to the API for monster Generation
+            RestClient rClient = new RestClient();
+            string nPage = "https://api.open5e.com/magicitems/"; //currently testing if can be filtered by rarity
+            rClient.endPoint = nPage;
+
+            //Console.WriteLine("Rest Client Created");  //checking to ensure connection is setup to API
+            //pulling JSON data and making it usable to C#
+            string Results = (string)rClient.makeRequest();
+            var jPerson = JsonConvert.DeserializeObject<dynamic>(Results);
+
+            //setting up to randomly grab all magic items in the API
+            int cnt = jPerson.count;
+            int spot = rand.Next(0, 5);
+            int str = spot;
+            //loop because given JSON pages with up to 50 items at a time, and can grab from any random page
+            while (str < 5 && !string.IsNullOrEmpty(nPage))
+            {
+                //grabbing the link to the next page if the monster is not on the current one
+                nPage = jPerson.next;
+                rClient.endPoint = nPage;
+                //pulling and making the next page readable
+                Results = (string)rClient.makeRequest();
+                jPerson = JsonConvert.DeserializeObject<dynamic>(Results);
+
+                str++;
+            }
+            return jPerson.results[spot % 50];
+        }
+
+        public dynamic FindLoot(string rarity)
+        {
+            //setting up the connection to the API for monster Generation
+            RestClient rClient = new RestClient();
+            string nPage = "https://api.open5e.com/magicitems/"; //currently testing if can be filtered by rarity
+            rClient.endPoint = nPage;
+
+            //Console.WriteLine("Rest Client Created");  //checking to ensure connection is setup to API
+            //pulling JSON data and making it usable to C#
+            string Results = (string)rClient.makeRequest();
+            var jPerson = JsonConvert.DeserializeObject<dynamic>(Results);
+
+            //setting up to randomly grab all magic items in the API
+            int cnt = jPerson.count;
+            int spot = rand.Next(0, 5);
+            int str = spot;
+            //loop because given JSON pages with up to 50 items at a time, and can grab from any random page
+            while (str < 5 && !string.IsNullOrEmpty(nPage))
+            {
+                //grabbing the link to the next page if the monster is not on the current one
+                rClient.endPoint = nPage;
+                nPage = jPerson.next;
+                //pulling and making the next page readable
+                Results = (string)rClient.makeRequest();
+                jPerson = JsonConvert.DeserializeObject<dynamic>(Results);
+
+                str++;
+            }
+            while (str == 5)
+            {
+                spot = rand.Next(0, 37);
+                if (((string)jPerson.results[spot].rarity)[0].Equals(rarity[0]))
+                {
+                    return jPerson.results[spot];
+                }
+                
+            }
+            while (str != 5)
+            {
+                spot = rand.Next(0, 49);
+                if (((string)jPerson.results[spot].rarity)[0].Equals(rarity[0]))
+                {
+                    return jPerson.results[spot];
+                }
+
+            }
             return jPerson.results[spot % 50];
         }
     }
+   
 }

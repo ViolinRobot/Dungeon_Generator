@@ -30,6 +30,8 @@ namespace Dungeon_Generator
             Console.WriteLine("deadly is");
             gener.GenerateDeadly();
 
+            Console.WriteLine(gener.FindLoot("uncommon"));
+
         }
     }
 }
