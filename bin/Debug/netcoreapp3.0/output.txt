@@ -1,0 +1,347 @@
+The air in this arctic area is frigid and frigid. You taste winter air on your tongue, and hear the low noise of wind howling in the distance. The ground under your feet is frozen and frozen; the smell of something burning permeates the air, causing you to rub your arms. Your eyes adjust to the dark light. What do you do?easy difficultythere are1Ghoul, Imperialmedium difficultythere are 3 Nightmareshard difficultythere are 3 Unicornsthere are 4 PlareshsA dangerous encounter{
+  "slug": "ghoul-imperial",
+  "name": "Ghoul, Imperial",
+  "size": "Medium",
+  "type": "undead",
+  "subtype": "",
+  "group": null,
+  "alignment": "lawful evil",
+  "armor_class": 16,
+  "armor_desc": "breastplate",
+  "hit_points": 93,
+  "hit_dice": "17d8+17",
+  "speed": {
+    "walk": 30,
+    "burrow": 15
+  },
+  "strength": 16,
+  "dexterity": 14,
+  "constitution": 12,
+  "intelligence": 13,
+  "wisdom": 14,
+  "charisma": 14,
+  "strength_save": null,
+  "dexterity_save": null,
+  "constitution_save": null,
+  "intelligence_save": null,
+  "wisdom_save": null,
+  "charisma_save": null,
+  "perception": null,
+  "skills": {},
+  "damage_vulnerabilities": "",
+  "damage_resistances": "",
+  "damage_immunities": "poison",
+  "condition_immunities": "charmed, exhaustion, poisoned",
+  "senses": "darkvision 60 ft., passive Perception 12",
+  "languages": "Common, Darakhul, Undercommon",
+  "challenge_rating": "4",
+  "actions": [
+    {
+      "name": "Multiattack",
+      "desc": "The imperial ghoul makes one bite attack and one claws attack."
+    },
+    {
+      "name": "Bite",
+      "desc": "Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 12 (2d8 + 3) piercing damage, and if the target creature is humanoid it must succeed on a DC 11 Constitution saving throw or contract darakhul fever.",
+      "attack_bonus": 5,
+      "damage_dice": "2d8+3"
+    },
+    {
+      "name": "Claws",
+      "desc": "Melee Weapon Attack: +5 to hit, reach, one target. Hit: 17 (4d6 + 3) slashing damage. If the target is a creature other than an elf or undead, it must succeed on a DC 11 Constitution saving throw or be paralyzed for 1 minute. The target repeats the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+      "attack_bonus": 5,
+      "damage_dice": "4d6"
+    },
+    {
+      "name": "Light Crossbow",
+      "desc": "Ranged Weapon Attack: +4 to hit, range 80/320, one target. Hit: 8 (1d8 + 2) piercing damage.",
+      "attack_bonus": 4,
+      "damage_dice": "1d8"
+    }
+  ],
+  "reactions": "",
+  "legendary_desc": "",
+  "legendary_actions": "",
+  "special_abilities": [
+    {
+      "name": "Turning Defiance",
+      "desc": "The iron ghoul and any ghouls within 30 feet of it have advantage on saving throws against effects that turn undead."
+    }
+  ],
+  "spell_list": [],
+  "img_main": null,
+  "document__slug": "tob",
+  "document__title": "Tome of Beasts OGL",
+  "document__license_url": "http://open5e.com/legal"
+}{
+  "slug": "nightmare",
+  "name": "Nightmare",
+  "size": "Large",
+  "type": "fiend",
+  "subtype": "",
+  "group": null,
+  "alignment": "neutral evil",
+  "armor_class": 13,
+  "armor_desc": "natural armor",
+  "hit_points": 68,
+  "hit_dice": "8d10+24",
+  "speed": {
+    "walk": 60,
+    "fly": 90
+  },
+  "strength": 18,
+  "dexterity": 15,
+  "constitution": 16,
+  "intelligence": 10,
+  "wisdom": 13,
+  "charisma": 15,
+  "strength_save": null,
+  "dexterity_save": null,
+  "constitution_save": null,
+  "intelligence_save": null,
+  "wisdom_save": null,
+  "charisma_save": null,
+  "perception": null,
+  "skills": {},
+  "damage_vulnerabilities": "",
+  "damage_resistances": "",
+  "damage_immunities": "fire",
+  "condition_immunities": "",
+  "senses": "passive Perception 11",
+  "languages": "understands Abyssal, Common, and Infernal but can't speak",
+  "challenge_rating": "3",
+  "actions": [
+    {
+      "name": "Hooves",
+      "desc": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 13 (2d8 + 4) bludgeoning damage plus 7 (2d6) fire damage.",
+      "attack_bonus": 6,
+      "damage_dice": "2d8+2d6",
+      "damage_bonus": 4
+    },
+    {
+      "name": "Ethereal Stride",
+      "desc": "The nightmare and up to three willing creatures within 5 feet of it magically enter the Ethereal Plane from the Material Plane, or vice versa."
+    }
+  ],
+  "reactions": "",
+  "legendary_desc": "",
+  "legendary_actions": "",
+  "special_abilities": [
+    {
+      "name": "Confer Fire Resistance",
+      "desc": "The nightmare can grant resistance to fire damage to anyone riding it."
+    },
+    {
+      "name": "Illumination",
+      "desc": "The nightmare sheds bright light in a 10-foot radius and dim light for an additional 10 feet."
+    }
+  ],
+  "spell_list": [],
+  "img_main": null,
+  "document__slug": "wotc-srd",
+  "document__title": "Systems Reference Document",
+  "document__license_url": "http://open5e.com/legal"
+}{
+  "slug": "unicorn",
+  "name": "Unicorn",
+  "size": "Large",
+  "type": "celestial",
+  "subtype": "",
+  "group": null,
+  "alignment": "lawful good",
+  "armor_class": 12,
+  "armor_desc": null,
+  "hit_points": 67,
+  "hit_dice": "9d10+18",
+  "speed": {
+    "walk": 50
+  },
+  "strength": 18,
+  "dexterity": 14,
+  "constitution": 15,
+  "intelligence": 11,
+  "wisdom": 17,
+  "charisma": 16,
+  "strength_save": null,
+  "dexterity_save": null,
+  "constitution_save": null,
+  "intelligence_save": null,
+  "wisdom_save": null,
+  "charisma_save": null,
+  "perception": null,
+  "skills": {},
+  "damage_vulnerabilities": "",
+  "damage_resistances": "",
+  "damage_immunities": "poison",
+  "condition_immunities": "charmed, paralyzed, poisoned",
+  "senses": "darkvision 60 ft., passive Perception 13",
+  "languages": "Celestial, Elvish, Sylvan, telepathy 60 ft.",
+  "challenge_rating": "5",
+  "actions": [
+    {
+      "name": "Multiattack",
+      "desc": "The unicorn makes two attacks: one with its hooves and one with its horn."
+    },
+    {
+      "name": "Hooves",
+      "desc": "Melee Weapon Attack: +7 to hit, reach 5 ft ., one target. Hit: 11 (2d6 + 4) bludgeoning damage.",
+      "attack_bonus": 7,
+      "damage_dice": "2d6",
+      "damage_bonus": 4
+    },
+    {
+      "name": "Horn",
+      "desc": "Melee Weapon Attack: +7 to hit, reach 5 ft ., one target. Hit: 8 (1d8 + 4) piercing damage.",
+      "attack_bonus": 7,
+      "damage_dice": "1d8",
+      "damage_bonus": 4
+    },
+    {
+      "name": "Healing Touch (3/Day)",
+      "desc": "The unicorn touches another creature with its horn. The target magically regains 11 (2d8 + 2) hit points. In addition, the touch removes all diseases and neutralizes all poisons afflicting the target."
+    },
+    {
+      "name": "Teleport (1/Day)",
+      "desc": "The unicorn magically teleports itself and up to three willing creatures it can see within 5 ft. of it, along with any equipment they are wearing or carrying, to a location the unicorn is familiar with, up to 1 mile away."
+    }
+  ],
+  "reactions": "",
+  "legendary_desc": "The unicorn can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The unicorn regains spent legendary actions at the start of its turn.",
+  "legendary_actions": [
+    {
+      "name": "Hooves",
+      "desc": "The unicorn makes one attack with its hooves."
+    },
+    {
+      "name": "Shimmering Shield (Costs 2 Actions)",
+      "desc": "The unicorn creates a shimmering, magical field around itself or another creature it can see within 60 ft. of it. The target gains a +2 bonus to AC until the end of the unicorn's next turn."
+    },
+    {
+      "name": "Heal Self (Costs 3 Actions)",
+      "desc": "The unicorn magically regains 11 (2d8 + 2) hit points."
+    }
+  ],
+  "special_abilities": [
+    {
+      "name": "Charge",
+      "desc": "If the unicorn moves at least 20 ft. straight toward a target and then hits it with a horn attack on the same turn, the target takes an extra 9 (2d8) piercing damage. If the target is a creature, it must succeed on a DC 15 Strength saving throw or be knocked prone.",
+      "attack_bonus": 0,
+      "damage_dice": "2d8"
+    },
+    {
+      "name": "Innate Spellcasting",
+      "desc": "The unicorn's innate spellcasting ability is Charisma (spell save DC 14). The unicorn can innately cast the following spells, requiring no components:\n\nAt will: detect evil and good, druidcraft, pass without trace\n1/day each: calm emotions, dispel evil and good, entangle"
+    },
+    {
+      "name": "Magic Resistance",
+      "desc": "The unicorn has advantage on saving throws against spells and other magical effects."
+    },
+    {
+      "name": "Magic Weapons",
+      "desc": "The unicorn's weapon attacks are magical."
+    }
+  ],
+  "spell_list": [
+    "https://api.open5e.com/spells/detect-evil-and-good/",
+    "https://api.open5e.com/spells/druidcraft/",
+    "https://api.open5e.com/spells/pass-without-trace/",
+    "https://api.open5e.com/spells/calm-emotions/",
+    "https://api.open5e.com/spells/dispel-evil-and-good/",
+    "https://api.open5e.com/spells/entangle/"
+  ],
+  "img_main": null,
+  "document__slug": "wotc-srd",
+  "document__title": "Systems Reference Document",
+  "document__license_url": "http://open5e.com/legal"
+}{
+  "slug": "mahoru",
+  "name": "Mahoru",
+  "size": "Large",
+  "type": "monstrosity",
+  "subtype": "",
+  "group": null,
+  "alignment": "unaligned",
+  "armor_class": 15,
+  "armor_desc": "natural armor",
+  "hit_points": 91,
+  "hit_dice": "14d8+28",
+  "speed": {
+    "walk": 10,
+    "swim": 60
+  },
+  "strength": 18,
+  "dexterity": 19,
+  "constitution": 14,
+  "intelligence": 3,
+  "wisdom": 12,
+  "charisma": 7,
+  "strength_save": null,
+  "dexterity_save": null,
+  "constitution_save": null,
+  "intelligence_save": null,
+  "wisdom_save": null,
+  "charisma_save": null,
+  "perception": 3,
+  "skills": {
+    "perception": 3,
+    "stealth": 6
+  },
+  "damage_vulnerabilities": "",
+  "damage_resistances": "",
+  "damage_immunities": "",
+  "condition_immunities": "",
+  "senses": "darkvision 60 ft., passive Perception 13",
+  "languages": "-",
+  "challenge_rating": "3",
+  "actions": [
+    {
+      "name": "Bite",
+      "desc": "Melee Weapon Attack: +6 to hit, reach 5 ft., one target. Hit: 20 (3d10 + 4) slashing damage.",
+      "attack_bonus": 6,
+      "damage_dice": "3d10"
+    },
+    {
+      "name": "Roar",
+      "desc": "When a mahoru roars all creatures with hearing within 30 feet of it must succeed on a DC 14 Wisdom saving throw or become frightened until the end of the mahoru's next turn. If the target fails the saving throw by 5 or more, it's also paralyzed for the same duration. A target that succeeds on the saving throw is immune to the Roar of all mahoru for the next 24 hours."
+    },
+    {
+      "name": "Vorpal Bite",
+      "desc": "a mahoru's saw-like jaws are excel at dismembering prey. When the mahoru scores a critical hit, the target must succeed on a DC 14 Strength saving throw or lose an appendage. Roll on the following table for the result:\n\n1-2: right hand\n\n3-4: left hand\n\n5-6: right food\n\n7-8: left foot\n\n9: right forearm\n\n10: left forearm\n\n11: right lower leg\n\n12: left lower leg"
+    }
+  ],
+  "reactions": "",
+  "legendary_desc": "",
+  "legendary_actions": "",
+  "special_abilities": [
+    {
+      "name": "Amphibious",
+      "desc": "The mahoru can breathe air and water."
+    },
+    {
+      "name": "Keen Sight and Smell",
+      "desc": "The mahoru has advantage on Wisdom (Perception) checks that rely on sight or smell."
+    },
+    {
+      "name": "Pack Tactics",
+      "desc": "The mahoru has advantage on attack rolls against a creature if at least one of the mahoru's allies is within 5 feet of the creature and the ally isn't incapacitated."
+    },
+    {
+      "name": "Blood Frenzy",
+      "desc": "The mahoru has advantage on melee attack rolls against any creature that isn't at maximum hit points."
+    }
+  ],
+  "spell_list": [],
+  "img_main": null,
+  "document__slug": "tob",
+  "document__title": "Tome of Beasts OGL",
+  "document__license_url": "http://open5e.com/legal"
+}a magic item that could be rewarded along the way{
+  "slug": "dragon-scale-mail",
+  "name": "Dragon Scale Mail",
+  "type": "Armor (scale mail)",
+  "desc": "Dragon scale mail is made of the scales of one kind of dragon. Sometimes dragons collect their cast-off scales and gift them to humanoids. Other times, hunters carefully skin and preserve the hide of a dead dragon. In either case, dragon scale mail is highly valued.\n\nWhile wearing this armor, you gain a +1 bonus to AC, you have advantage on saving throws against the Frightful Presence and breath weapons of dragons, and you have resistance to one damage type that is determined by the kind of dragon that provided the scales (see the table).\n\nAdditionally, you can focus your senses as an action to magically discern the distance and direction to the closest dragon within 30 miles of you that is of the same type as the armor. This special action can't be used again until the next dawn.\n\n| Dragon | Resistance |\n|--------|------------|\n| Black  | Acid       |\n| Blue   | Lightning  |\n| Brass  | Fire       |\n| Bronze | Lightning  |\n| Copper | Acid       |\n| Gold   | Fire       |\n| Green  | Poison     |\n| Red    | Fire       |\n| Silver | Cold       |\n| White  | Cold       |",
+  "rarity": "very rare",
+  "requires_attunement": "requires attunement",
+  "document__slug": "wotc-srd",
+  "document__title": "Systems Reference Document"
+}

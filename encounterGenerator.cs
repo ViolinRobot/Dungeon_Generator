@@ -32,6 +32,7 @@ namespace Dungeon_Generator
             lvl = level;
         }
 
+        //generate the encounters based off the character count and levels
         public dynamic GenerateEasy()
         {
             int exp = ezEXP[lvl] * chars;
@@ -63,13 +64,14 @@ namespace Dungeon_Generator
             //displaying the monster being used
             if (count == 1)
             {
-                Console.Write("there is " + count + " ");
-                Console.WriteLine(monster.name);
+                File.AppendAllText("output.txt", "there are" + count);
+                File.AppendAllText("output.txt", monster.name.ToString());
             }
-            else {
-                Console.Write("there are " + count + " ");
-                Console.Write(monster.name);
-                Console.WriteLine("s");
+            else
+            {
+                File.AppendAllText("output.txt", "there are " + count + " ");
+                File.AppendAllText("output.txt", monster.name.ToString());
+                File.AppendAllText("output.txt", "s");
             }
 
             return monster;
@@ -106,17 +108,16 @@ namespace Dungeon_Generator
             //displaying the monster being used
             if (count == 1)
             {
-                Console.Write("there is " + count + " ");
-                Console.WriteLine(monster.name);
+                File.AppendAllText("output.txt", "there are" + count);
+                File.AppendAllText("output.txt", monster.name.ToString());
             }
             else
             {
-                Console.Write("there are " + count + " ");
-                Console.Write(monster.name);
-                Console.WriteLine("s");
+                File.AppendAllText("output.txt", "there are " + count + " ");
+                File.AppendAllText("output.txt", monster.name.ToString());
+                File.AppendAllText("output.txt", "s");
             }
-
-            return monster;
+                return monster;
         }
         public dynamic GenerateHard()
         {
@@ -150,17 +151,17 @@ namespace Dungeon_Generator
             //displaying the monster being used
             if (count == 1)
             {
-                Console.Write("there is " + count + " ");
-                Console.WriteLine(monster.name);
+                File.AppendAllText("output.txt", "there are" + count);
+                File.AppendAllText("output.txt", monster.name.ToString());
             }
             else
             {
-                Console.Write("there are " + count + " ");
-                Console.Write(monster.name);
-                Console.WriteLine("s");
+                File.AppendAllText("output.txt", "there are " + count + " ");
+                File.AppendAllText("output.txt", monster.name.ToString());
+                File.AppendAllText("output.txt", "s");
             }
 
-            return monster;
+                return monster;
         }
         public dynamic GenerateDeadly()
         {
@@ -194,19 +195,21 @@ namespace Dungeon_Generator
             //displaying the monster being used
             if (count == 1)
             {
-                Console.Write("there is " + count + " ");
-                Console.WriteLine(monster.name);
+                File.AppendAllText("output.txt", "there are" + count);
+                File.AppendAllText("output.txt", monster.name.ToString());
             }
             else
             {
-                Console.Write("there are " + count + " ");
-                Console.Write(monster.name);
-                Console.WriteLine("s");
+                File.AppendAllText("output.txt", "there are " + count + " ");
+                File.AppendAllText("output.txt", monster.name.ToString());
+                File.AppendAllText("output.txt", "s");
             }
 
 
             return findRanMon(crEXP[i, 0]);
         }
+        
+        //pulling a random monster from the API given the CR dictated by the generator
         public dynamic findRanMon(int CR)
         {
             //setting up the connection to the API for monster Generation
@@ -271,14 +274,14 @@ namespace Dungeon_Generator
                 str++;
             }
 
-            return jPerson.results[spot % 50-1];
+            return jPerson.results[spot % 49];
         }
 
         public dynamic FindLoot()
         {
-            //setting up the connection to the API for monster Generation
+            //setting up the connection to the API for loot Generation
             RestClient rClient = new RestClient();
-            string nPage = "https://api.open5e.com/magicitems/"; //currently testing if can be filtered by rarity
+            string nPage = "https://api.open5e.com/magicitems/";
             rClient.endPoint = nPage;
 
             //Console.WriteLine("Rest Client Created");  //checking to ensure connection is setup to API
@@ -288,12 +291,12 @@ namespace Dungeon_Generator
 
             //setting up to randomly grab all magic items in the API
             int cnt = jPerson.count;
-            int spot = rand.Next(0, 5);
+            int spot = rand.Next(0, 4);
             int str = spot;
             //loop because given JSON pages with up to 50 items at a time, and can grab from any random page
-            while (str < 5 && !string.IsNullOrEmpty(nPage))
+            while (str < 4 && !string.IsNullOrEmpty(nPage))
             {
-                //grabbing the link to the next page if the monster is not on the current one
+                //grabbing the link to the next page if not choosing to use this one
                 nPage = jPerson.next;
                 rClient.endPoint = nPage;
                 //pulling and making the next page readable
@@ -305,9 +308,9 @@ namespace Dungeon_Generator
             return jPerson.results[spot % 50];
         }
 
-        public dynamic FindLoot(string rarity)
+        public dynamic FindLoot(string rarity)//same as above, except ensuring objects of certain rarities
         {
-            //setting up the connection to the API for monster Generation
+            //setting up the connection to the API for loot Generation
             RestClient rClient = new RestClient();
             string nPage = "https://api.open5e.com/magicitems/"; //currently testing if can be filtered by rarity
             rClient.endPoint = nPage;
@@ -333,7 +336,7 @@ namespace Dungeon_Generator
 
                 str++;
             }
-            while (str == 5)
+            while (str == 5)//last page doesn't have as many items so it has a special loop, to ensure that item is of correct rarity
             {
                 spot = rand.Next(0, 37);
                 if (((string)jPerson.results[spot].rarity)[0].Equals(rarity[0]))
@@ -342,7 +345,7 @@ namespace Dungeon_Generator
                 }
                 
             }
-            while (str != 5)
+            while (str != 5)//loop to ensure that the item is of the correct rarity
             {
                 spot = rand.Next(0, 49);
                 if (((string)jPerson.results[spot].rarity)[0].Equals(rarity[0]))

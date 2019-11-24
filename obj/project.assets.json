@@ -52,23 +52,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\isaac\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Sam\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\isaac\\OneDrive\\Documents\\_School\\_Westmont\\Fall 2019\\Programming Languages\\Dungeon_Generator\\Dungeon_Generator.csproj",
+      "projectUniqueName": "C:\\Users\\Sam\\Documents\\Dungeon_Generator\\Dungeon_Generator.csproj",
       "projectName": "Dungeon_Generator",
-      "projectPath": "C:\\Users\\isaac\\OneDrive\\Documents\\_School\\_Westmont\\Fall 2019\\Programming Languages\\Dungeon_Generator\\Dungeon_Generator.csproj",
-      "packagesPath": "C:\\Users\\isaac\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\isaac\\OneDrive\\Documents\\_School\\_Westmont\\Fall 2019\\Programming Languages\\Dungeon_Generator\\obj\\",
+      "projectPath": "C:\\Users\\Sam\\Documents\\Dungeon_Generator\\Dungeon_Generator.csproj",
+      "packagesPath": "C:\\Users\\Sam\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Sam\\Documents\\Dungeon_Generator\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\isaac\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Sam\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
