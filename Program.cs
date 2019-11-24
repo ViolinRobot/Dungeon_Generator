@@ -11,10 +11,11 @@ namespace Dungeon_Generator
     {
         static void Main(string[] args) 
         {
+            //included randomness for the sake of testing
             Random rand = new Random();
-            //            MapGenerator generator = new MapGenerator();
-
-            //            generator.PrintStringMap(generator.GenerateMap(generator.map, generator.fillDensity));
+            
+            //MapGenerator generator = new MapGenerator();
+            //generator.PrintStringMap(generator.GenerateMap(generator.map, generator.fillDensity));
             
             int count = rand.Next(1, 8);
             int level = rand.Next(1, 20);

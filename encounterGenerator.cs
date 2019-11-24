@@ -4,6 +4,11 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json;
 
+/*
+NOTE TO OTHERS:
+I think we're currently planning on writing everything to a file, assuming this is the case whatever has Console.Write or Console.WriteLine needs to be changed to 
+put it onto the text document, I'm sure that either you or I will need to reformat everything when we get there.  Also Isaac, I can't get your MapGenerator.cs to work
+    */
 namespace Dungeon_Generator
 {
     class EnGen
