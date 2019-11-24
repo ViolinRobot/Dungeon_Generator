@@ -1,6 +1,7 @@
 using System;
 namespace nameGen{
   class ranNameGen{
+    //setting up to grab random letters
     private Random rand = new Random();
     private string cons = "qwrtypsdfghjklzxcvbnm";
     private string vows = "aeuio";
@@ -9,6 +10,7 @@ namespace nameGen{
        int choice = rand.Next(1,4);
        string val = "";
        int i =0;
+       //building the name up to 3 letters at a time, but randomly choosing to use 1, 2, or 3 letters
        while (i<length){
         if(choice ==1){
           val = sylOne(val);
@@ -24,11 +26,15 @@ namespace nameGen{
        }
       return val;
      }
+
+        // a syllable one letter long, returns a random vowel
      private string sylOne(string name){
        int lett = rand.Next(0,5);
        char valt = vows[lett];
        return name += valt;
      }
+
+        // a syllable two letters long, returns a random vowel and consonant
      private string sylTwo(string name){
        int cho = rand.Next(0,2);
        string valt ="";
@@ -40,6 +46,7 @@ namespace nameGen{
        }
        return name += valt;
      }
+        // a syllable two letters long, returns a random vowel and two consonants in any order
      private string sylThree(string name){
        int cho = rand.Next(0,3);
        string valt= "";
