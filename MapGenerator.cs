@@ -134,12 +134,19 @@ namespace Dungeon_Generator
             List<Room> rooms = new List<Room>();
 
             TrimRegions(regionsFilled, sizeThreshold, 0);
-            TrimRegions(regionsSpace, sizeThreshold, 1, ref rooms, map);
+            TrimRegions(regionsSpace, sizeThreshold, 1);
+
+            regionsFilled = GetRegions(1);
+
+            foreach (List<Coord> region in regionsFilled)
+            {
+                rooms.Add(new Room(region, map));
+            }
 
             rooms.Sort();
             rooms[0].isMainRoom = true;
 
-            map = ConnectClosestRooms(rooms, map);
+            map = ConnectClosestRooms(rooms, 3, map);
 
             return map;
         }
@@ -158,25 +165,7 @@ namespace Dungeon_Generator
             }
         }
 
-        void TrimRegions(List<List<Coord>> regions, int sizeThreshold, int antiType, ref List<Room> roomsList, int[,] map)
-        {
-            foreach (List<Coord> region in regions)
-            {
-                if (region.Count < sizeThreshold)
-                {
-                    foreach (Coord position in region)
-                    {
-                        map[position.x, position.y] = antiType;
-                    }
-                } 
-                else
-                {
-                    roomsList.Add(new Room(region, map));
-                }
-            }
-        }
-
-        int[,] ConnectClosestRooms(List<Room> allRooms, int[,] map, bool forceAccessibleFromMainRoom = false)
+        int[,] ConnectClosestRooms(List<Room> allRooms, int passageWidth, int[,] map, bool forceAccessibleFromMainRoom = false)
         {
             List<Room> roomListA = new List<Room>();
             List<Room> roomListB = new List<Room>();
@@ -202,21 +191,21 @@ namespace Dungeon_Generator
             Coord bestSpaceB = new Coord();
             Room bestRoomA = new Room();
             Room bestRoomB = new Room();
-            bool possibleConnectionFound;
+            bool possibleConnectionFound = false;
 
             foreach (Room roomA in roomListA)
             {
-                possibleConnectionFound = false;
+                if (!forceAccessibleFromMainRoom)
+                {
+                    possibleConnectionFound = false;
+                    if (roomA.connectedRooms.Count > 0)
+                        continue;
+                }
 
                 foreach (Room roomB in roomListB)
                 {
-                    if (roomA == roomB)
+                    if (roomA == roomB || roomA.IsConnected(roomB))
                         continue;
-                    if (roomA.IsConnected(roomB))
-                    {
-                        possibleConnectionFound = false;
-                        break;
-                    }
 
                     for (int spaceIndexA = 0; spaceIndexA < roomA.edgeSpaces.Count; spaceIndexA++)
                     {
@@ -238,26 +227,107 @@ namespace Dungeon_Generator
                         }
                     }
 
-                    if (possibleConnectionFound)
-                    {
-                        map = CreatePassage(bestRoomA, bestRoomB, bestSpaceA, bestSpaceB, map);
-                    }
+                    if (possibleConnectionFound && !forceAccessibleFromMainRoom)
+                        map = CreatePassage(bestRoomA, bestRoomB, bestSpaceA, bestSpaceB, passageWidth, map);
+                }
+
+                if (possibleConnectionFound && forceAccessibleFromMainRoom)
+                {
+                    map = CreatePassage(bestRoomA, bestRoomB, bestSpaceA, bestSpaceB, passageWidth, map);
+                    ConnectClosestRooms(allRooms, passageWidth, map, true);
                 }
 
                 if (!forceAccessibleFromMainRoom)
                 {
-                    ConnectClosestRooms(allRooms, map, true);
+                    ConnectClosestRooms(allRooms, passageWidth, map, true);
                 }
             }
 
             return map;
         }
 
-        int[,] CreatePassage(Room roomA, Room roomB, Coord spaceA, Coord spaceB, int[,] map)
-        {
+        int[,] CreatePassage(Room roomA, Room roomB, Coord spaceA, Coord spaceB, int passageWidth, int[,] map)
+        { 
             Room.ConnectRooms(roomA, roomB);
 
+            List<Coord> path = GetPath(spaceA, spaceB);
+
+            foreach (Coord coord in path)
+            {
+                map = DrawPath(coord, passageWidth, map);
+            }
+
             return map;
+        }
+
+        int[,] DrawPath(Coord coord, int radius, int[,] map)
+        {
+            for (int x = -radius; x <= radius; x++)
+            {
+                for (int y = -radius; y <= radius; y++)
+                {
+                    if (x*x + y*y <= radius * radius)
+                    {
+                        int realX = coord.x + x;
+                        int realY = coord.y + x;
+
+                        if (WithinBounds(realX, realY))
+                            map[realX, realY] = 1;
+                    }
+                }
+            }
+
+            return map;
+        }
+
+        List<Coord> GetPath(Coord a, Coord b)
+        {
+            List<Coord> path = new List<Coord>();
+
+            int deltaX = b.x - a.x;
+            int deltaY = b.y - a.y;
+            int x = a.x;
+            int y = a.y;
+
+            bool inverted = false;
+            int step = Math.Sign(deltaX);
+            int gradientStep = Math.Sign(deltaY);
+
+            int longest = Math.Abs(deltaX);
+            int shortest = Math.Abs(deltaY);
+
+            if (longest < shortest)
+            {
+                inverted = true;
+                longest = Math.Abs(deltaY);
+                shortest = Math.Abs(deltaX);
+
+                step = Math.Sign(deltaY);
+                gradientStep = Math.Sign(deltaX);
+            }
+
+            int gradientAccumulation = longest / 2;
+            for (int i = 0; i < longest; i++)
+            {
+                path.Add(new Coord(x, y));
+                if (inverted)
+                    y += step;
+                else
+                    x += step;
+
+                gradientAccumulation += shortest;
+                if (gradientAccumulation >= longest)
+                {
+                    if (inverted)
+                        x += gradientStep;
+                    else
+                        y += gradientStep;
+
+                    gradientAccumulation -= longest;
+                }
+            }
+
+            return path;
         }
 
         bool WithinBounds(int x, int y)
@@ -278,6 +348,50 @@ namespace Dungeon_Generator
 
                 Console.WriteLine(row);
             }
+        }
+
+        public string StringMap(int[,] map)
+        {
+            string stringMap = "";
+
+            for (int i = 0; i < height; i++)
+            {
+                string row = "";
+                
+                for (int j = 0; j < width; j++)
+                {
+                    row += (map[j, i] == 0) ? "000" : " - ";
+                }
+
+                stringMap += row + "\n";
+            }
+
+            return stringMap;
+        }
+
+        public List<string> KerneledStringMap(int[,] map)
+        {
+            List<string> kerneledStringMap = new List<string>();
+
+            int kernelX = 74;
+            int kernelY = 50;
+            int startX = 0;
+            int startY = 0;
+
+            int numKernels = (((width * 3)/kernelX) + ((width*3)%kernelX)) * (((height * 3)/kernelY) + ((height*3)%kernelY));
+
+            //Console.WriteLine("Kernel information: " + numKernels + ", " + width * 3 + ", " + height * 3);
+
+            string[,] stringMap = new string[width,height];
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    stringMap[x, y] = (map[x, y] == 0) ? "000" : " - ";
+                }
+            }
+
+            return kerneledStringMap;
         }
 
         class Room : IComparable<Room> 
@@ -304,7 +418,7 @@ namespace Dungeon_Generator
                     {
                         for (int y = space.y-1; y <= space.y+1; y++)
                         {
-                            if (x == space.x || y == space.y)
+                            if (WithinBounds(x, y) && (x == space.x || y == space.y))
                             {
                                 if (map[x, y] == 0)
                                     edgeSpaces.Add(space);
@@ -348,6 +462,10 @@ namespace Dungeon_Generator
             public int CompareTo(Room otherRoom)
             {
                 return otherRoom.roomSize.CompareTo(roomSize);
+            }
+            bool WithinBounds(int x, int y)
+            {
+                return (x >= 0 && x < width && y >= 0 && y < height);
             }
         }
 
