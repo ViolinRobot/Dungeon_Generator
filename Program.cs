@@ -24,6 +24,7 @@ namespace Dungeon_Generator
             MapGenerator generator = new MapGenerator();
 
             string map = generator.StringMap(generator.GenerateMap(generator.map, generator.fillDensity));
+            //Console.WriteLine(map);
             File.AppendAllText(outputFileName, map);
 
             generator.KerneledStringMap(generator.map);

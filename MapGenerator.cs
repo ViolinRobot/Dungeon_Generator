@@ -375,23 +375,38 @@ namespace Dungeon_Generator
 
             int kernelX = 74;
             int kernelY = 50;
-            int startX = 0;
-            int startY = 0;
 
-            int numKernels = (((width * 3)/kernelX) + ((width*3)%kernelX)) * (((height * 3)/kernelY) + ((height*3)%kernelY));
+            int numKernels = (int)(Math.Ceiling((width * 3d)/kernelX) * Math.Ceiling((height * 3d)/kernelY));
 
-            //Console.WriteLine("Kernel information: " + numKernels + ", " + width * 3 + ", " + height * 3);
+            Console.WriteLine("Kernel information: " + numKernels + ", " + width * 3 + ", " + height * 3);
 
-            string[,] stringMap = new string[width,height];
-            for (int x = 0; x < width; x++)
+            string[,] thingToKernel = new string[width, height];
+
+            for (int i = 0; i < height; i++)
             {
-                for (int y = 0; y < height; y++)
+                for (int j = 0; j < width; j++)
                 {
-                    stringMap[x, y] = (map[x, y] == 0) ? "000" : " - ";
+                    thingToKernel[i, j] = (map[i, j] == 0) ? "000" : " - ";
                 }
             }
 
+            for (int i = 0; i < numKernels; i++)
+            {
+                kerneledStringMap.Add(GetKernel(i, width, height, thingToKernel));
+            }
+
             return kerneledStringMap;
+        }
+
+        string GetKernel(int index, int kWidth, int kHeight, string[,] thingToKernel)
+        {
+            string kernel = "";
+            int startX;
+            int startY;
+
+
+
+            return kernel;
         }
 
         class Room : IComparable<Room> 
